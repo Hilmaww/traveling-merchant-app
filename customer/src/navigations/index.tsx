@@ -9,7 +9,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={Home} options={{ title: 'Traveling Merchant' }}/>
         <Stack.Screen name="Merchant" component={Merchant} />
       </Stack.Navigator>
     </NavigationContainer>
