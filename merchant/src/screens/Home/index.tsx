@@ -8,6 +8,7 @@ export default function App() {
     const [titleText, setTitleText] = useState("Pak Budi");
     const [flag, setFlag] = useState(true);
     const [loc, setLoc] = useState([0, 0])
+    const [data, setData] = useState("")
     const bodyText = "Tukang Bakso";
 
     const onPressTitle = () => {
@@ -22,24 +23,31 @@ export default function App() {
     };
 
     React.useEffect(() => {
-        // Get position Data
+        // Get position Data 
         const pos = () => {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                setLoc([position.coords.latitude, position.coords.longitude])
-            })
-        }
-        
+        navigator.geolocation.getCurrentPosition(function(position) {
+          console.log("Latitude is :", position.coords.latitude);
+          console.log("Longitude is :", position.coords.longitude);
+          setLoc([position.coords.latitude, position.coords.longitude])
+        })
+      }
         pos();
-        Axios.post('https://travelling-merchant-app.herokuapp.com/v1/api/coordinates', {
-            "merchant_id" : 1321,
-            "coordinates" : {
-                "latitude" : loc[0],
-                "longitude" : loc[1]
-            }
-        }) // Mengirim data ke server
+        Axios.post('https://travelling-merchant-app.herokuapp.com/v1/api/coordinate', {
+            "merchant_id" : 2,
+            "coordinate" : {
+                "latitude" : 23123,
+                "longitude" : -123232,
+            },
+        }).then((response) => {
+          console.log(response);
+        });// Mengirim data ke server
+//
+        //Axios.get('https://travelling-merchant-app.herokuapp.com/v1/api/merchants/2').then((data: any) => {
+        //    console.log(data.data);
+        //    setTitleText(data.data.name)
+        //}) // Dapat data dari backend
 
     }, [])    
-    console.log(loc)
     return (
         <Text >
           <Text onPress={onPressTitle}>
