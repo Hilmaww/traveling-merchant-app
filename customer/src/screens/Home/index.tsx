@@ -1,13 +1,22 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import MapView from 'react-native-maps';
+import { StyleSheet, View, Dimensions } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hello world!</Text>
-      <MapView style={styles.map}/>
-    </View>
-  );
+
+    return (
+        <View style={styles.container}>
+            <MapView style={styles.map}>
+                <Marker
+                    coordinate={{
+                        latitude: 37.78825,
+                        longitude: -122.4324
+                    }}
+                    title={"Pak Sutomo"}
+                    description={"Ketoprak"}
+                />
+            </MapView>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
