@@ -4,6 +4,7 @@ import { StyleSheet, View, Dimensions } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 
 import { merchant } from '../../models'
+import Axios from 'axios'
 
 import { StackScreenProps } from '@react-navigation/stack';
 
@@ -16,35 +17,10 @@ export default ({ navigation }: StackScreenProps<Params>) => {
     const [ data, setData ] = React.useState<merchant[]>([])
 
     React.useEffect(() => {
-        setData([
-            {
-                merchant_id: 1,
-                name: "Pak Sutomo",
-                description: "Ketoprak",
-                coordinate: {
-                    longitude: 107.594,
-                    latitude: -6.904
-                }
-            },
-            {
-                merchant_id: 2,
-                name: "Pak Bowo",
-                description: "Sol Sepatu",
-                coordinate: {
-                    longitude: 107.6067742,
-                    latitude: -6.9171595
-                }
-            },
-            {
-                merchant_id: 3,
-                name: "Pak Jack",
-                description: "Ketoprak",
-                coordinate: {
-                    longitude: 107.608238,
-                    latitude: -6.914864,
-                }
-            }
-        ])
+        Axios.get('https://travelling-merchant-app.herokuapp.com/v1/api/merchants')
+        .then((res: any) => {
+            setData(res.data)
+        })
     }, [])
 
 
@@ -64,8 +40,8 @@ export default ({ navigation }: StackScreenProps<Params>) => {
                             <Marker
                                 key={merchant.merchant_id.toString()}
                                 coordinate={{
-                                    latitude: merchant.coordinate.latitude,
-                                    longitude: merchant.coordinate.longitude
+                                    latitude: Number(merchant.coordinate.latitude),
+                                    longitude: Number(merchant.coordinate.longitude)
                                 }}
                                 title={merchant.name}
                                 description={merchant.description}
