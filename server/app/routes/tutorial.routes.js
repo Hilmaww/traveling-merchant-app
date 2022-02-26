@@ -7,8 +7,11 @@ module.exports = app =>{
         res.send('Hello world')
     })
     
+    // Merchan Pasang kordinat
+    router.post('/coordinate', merchantController.initCoordinate)
+
     // Merchan update kordinat
-    router.post('/coordinate', merchantController.sendCoordinate)
+    router.put('/coordinate', merchantController.sendCoordinate)
     
     // Costumer cek merchant
     router.get('/merchants', customerController.getMerchantAll)

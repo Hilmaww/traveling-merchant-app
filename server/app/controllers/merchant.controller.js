@@ -5,11 +5,11 @@
 dbo = require('../config/con');
 
 
-// Merchant Post Coordinate
+// Merchant Init Coordinate
 
-exports.sendCoordinate = (req,res)=> {
+exports.initCoordinate = (req, res)=>{
   const dbConnect = dbo.getDb();
-
+  
   const merchant_id = req.body.merchant_id;
   const coordinate = req.body.coordinate; // {"latitude": 37.788, "longitude": -122.432}
   
@@ -27,6 +27,32 @@ exports.sendCoordinate = (req,res)=> {
         console.log(`Added a new coordinate with id ${result.insertedId}`);
         res.status(204).send();
       }
+    });
+}
+
+
+// Merchant Update Coordinate
+
+exports.sendCoordinate = (req,res)=> {
+  const dbConnect = dbo.getDb();
+
+  const merchant_id = req.body.merchant_id;
+  const coordinate = req.body.coordinate; // {"latitude": 37.788, "longitude": -122.432}
+  
+  const query = { merchant_id: merchant_id };
+
+  const newCoordinateDocument = {
+    $set: {
+    merchant_id: merchant_id,
+    coordinate: coordinate}
+  };
+
+  dbConnect
+    .collection("travelling-coordinates")
+    .updateOne(query, newCoordinateDocument, function (err, result) {
+      if (err) throw err;
+      console.log(`Updated 1 coordinate with id ${result.merchant_id}`);
+      res.json(result)
     });
 }
 
