@@ -5,7 +5,7 @@
 dbo = require('../config/con');
 
 
-// Post Coordinate
+// Merchant Post Coordinate
 
 exports.sendCoordinate = (req,res)=> {
   const dbConnect = dbo.getDb();
@@ -30,18 +30,6 @@ exports.sendCoordinate = (req,res)=> {
     });
 }
 
-
-// Get merchant 
-exports.getMerchant = (req, res)=> {
-  const dbConnect = dbo.getDb();
-
-  dbConnect
-    .collection("travelling-coordinates")
-    .find({}).toArray(function (err, result) {
-      if (err) throw err;
-      res.json(result);
-    });
-}
 
 
 

@@ -1,6 +1,6 @@
 module.exports = app =>{
-    const trvController = require("../controllers/tutorial.controller");
-    // const trvController = require("../controllers/traveller.controller");
+    const merchantController = require("../controllers/merchant.controller");
+    const customerController = require("../controllers/customer.controller");
     var router = require('express').Router()
 
     router.get('/',(req, res)=>{
@@ -8,13 +8,14 @@ module.exports = app =>{
     })
     
     // Merchan update kordinat
-    router.post('/coordinate', trvController.sendCoordinate)
+    router.post('/coordinate', merchantController.sendCoordinate)
     
     // Costumer cek merchant
-    router.get('/merchants', trvController.getMerchant)
+    router.get('/merchants', customerController.getMerchantAll)
     
     //router.get('merchants/:id', trvController.merchant);
-
+    router.get('/merchants/:id', customerController.getMerchantById)
+    
     app.use('/v1/api', router);
     
 
