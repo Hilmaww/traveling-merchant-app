@@ -35,8 +35,8 @@ export default function App() {
         Axios.post('https://travelling-merchant-app.herokuapp.com/v1/api/coordinate', {
             "merchant_id" : 2,
             "coordinate" : {
-                "latitude" : 23123,
-                "longitude" : -123232,
+                "latitude" : loc[0],
+                "longitude" : loc[1],
             },
         }).then((response) => {
           console.log(response);
