@@ -44,16 +44,46 @@ exports.sendCoordinate = (req,res)=> {
   const newCoordinateDocument = {
     $set: {
     merchant_id: merchant_id,
-    coordinate: coordinate}
+    coordinate: coordinate
+    }
   };
 
-  dbConnect
+  const newProfileDocument = {
+    $set: {
+      merchant_id: merchant_id,
+      coordinate: coordinate
+      }
+  }
+
+  var allCoordinatesDocument = dbConnect  
     .collection("travelling-coordinates")
-    .updateOne(query, newCoordinateDocument, function (err, result) {
-      if (err) throw err;
-      console.log(`Updated 1 coordinate with id ${result.merchant_id}`);
-      res.json(result)
+    .find({merchant_id:merchant_id})
+    .toArray(function (err, result) {
+      if (err) {
+        res.status(400).send("Error fetching listings!");
+     } 
     });
+
+  if(allCoordinatesDocument > 0){ //Ngecek apakah ada id yang dicari
+    dbConnect
+    .collection("travelling-coordinates")
+    .findOneAndUpdate(query, newCoordinateDocument, null, function (err, result) {
+      if (err) throw err;
+      console.log(`Updated 1 coordinate on merchant: ${result}`);
+    });
+
+  dbConnect
+    .collection("merchant-profile")
+    .updateOne(query, newProfileDocument, function (err, result) {
+      if (err) {throw err}
+      console.log(`Updated 1 coordinate on profile`);
+      res.json({message:"Done!", data: result})
+    })
+  }
+  else{
+    res.json({message:"Failed. No Id matched"})
+  }
+    
 }
 
 
