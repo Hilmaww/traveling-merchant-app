@@ -17,10 +17,13 @@ export default ({ navigation }: StackScreenProps<Params>) => {
     const [ data, setData ] = React.useState<merchant[]>([])
 
     React.useEffect(() => {
-        Axios.get('https://travelling-merchant-app.herokuapp.com/v1/api/merchants')
-        .then((res: any) => {
-            setData(res.data)
-        })
+        const interval = setInterval(() => {
+            Axios.get('https://travelling-merchant-app.herokuapp.com/v1/api/merchants')
+            .then((res: any) => {
+                setData(res.data)
+            })
+        }, 1000);
+        return () => clearInterval(interval);
     }, [])
 
 
