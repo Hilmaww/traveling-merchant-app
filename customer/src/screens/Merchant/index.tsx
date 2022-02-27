@@ -12,7 +12,7 @@ export default function App() {
   
   React.useEffect(() => {
     // Line 15, tinggal diganti dengan "../merchants/${id}"
-    Axios.get('https://travelling-merchant-app.herokuapp.com/v1/api/merchants/2')
+    Axios.get('https://travelling-merchant-app.herokuapp.com/v1/api/merchants/11')
     .then((res:any) => {
       
       setName(res.data.name);
